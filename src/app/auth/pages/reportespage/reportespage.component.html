@@ -1,0 +1,70 @@
+<body>
+    <div class="container">
+        <!-- Botón de regreso a inicio -->
+        <button mat-button class="back-button" (click)="goHome()">
+            <mat-icon>home</mat-icon>
+            Regreso a inicio
+        </button>
+
+        <h1 style="color: black">Agregar Incidencia</h1>
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="notifForm">
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Asunto</mat-label>
+                        <input matInput formControlName="title" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Fecha y hora de Mantenimiento</mat-label>
+                        <input matInput type="date" formControlName="startDate" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Area Estacionamiento</mat-label>
+                        <mat-select formControlName="area">
+                            <mat-option value="norte">Norte</mat-option>
+                            <mat-option value="sur">Sur</mat-option>
+                            <mat-option value="este">Este</mat-option>
+                            <mat-option value="oeste">Oeste</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="full-width">
+                        <mat-label>Descripcion</mat-label>
+                        <textarea matInput formControlName="description"></textarea>
+                    </mat-form-field>
+
+                    <div class="full-width">
+                        <mat-label>Prioridad</mat-label>
+                        <mat-radio-group formControlName="priority" class="radio-group">
+                            <mat-radio-button value="alta">Alta</mat-radio-button>
+                            <mat-radio-button value="media">Media</mat-radio-button>
+                            <mat-radio-button value="baja">Baja</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="full-width">
+                        <mat-label>Enviar a: </mat-label>
+                        <mat-radio-group formControlName="recipient" class="radio-group">
+                            <mat-radio-button value="estudiantes">Estudiantes</mat-radio-button>
+                            <mat-radio-button value="administracion">Administrativo</mat-radio-button>
+                            <mat-radio-button value="mantenimiento">Mantenimiento</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="button-container">
+                        <button mat-raised-button type="button" style="background: red">
+                            <mat-icon>cancel</mat-icon>
+                            Cancelar
+                        </button>
+                        <button mat-raised-button color="primary" type="submit">
+                            <mat-icon>save</mat-icon>
+                            Generar
+                        </button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</body>

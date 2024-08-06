@@ -6,13 +6,13 @@
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Tipo de Usuario</mat-label>
           <mat-select formControlName="userType" (selectionChange)="onUserTypeChange()">
-            <mat-option value="Estudiante">Estudiante</mat-option>
-            <mat-option value="Profesor">Profesor</mat-option>
+            <mat-option value="student">Alumno</mat-option>
+            <mat-option value="teacher">Profesor</mat-option>
           </mat-select>
         </mat-form-field>
 
         <ng-container [ngSwitch]="vehicleForm.value.userType">
-          <div *ngSwitchCase="'Estudiante'">
+          <div *ngSwitchCase="'student'">
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>Número de Control</mat-label>
               <input matInput formControlName="controlNumber">
@@ -31,17 +31,17 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>Grupo</mat-label>
-              <mat-select formControlName="groupo">
-                <mat-option *ngFor="let groupo of careerGroups[selectedCareer]" [value]="groupo">
-                  {{ groupo }}
+              <mat-select formControlName="group">
+                <mat-option *ngFor="let group of careerGroups[selectedCareer]" [value]="group">
+                  {{ group }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div *ngSwitchCase="'Profesor'">
+          <div *ngSwitchCase="'teacher'">
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>Clave de Profesor</mat-label>
-              <input matInput  formControlName="controlNumber">
+              <input matInput type="text" formControlName="birthDate">
             </mat-form-field>
             <!-- Puedes agregar más campos específicos para el profesor aquí si es necesario -->
           </div>

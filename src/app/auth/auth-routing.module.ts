@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutpageComponent } from './pages/layoutpage/layoutpage.component';
+import { ReportespageComponent } from './pages/reportespage/reportespage.component';
 import { RegistropageComponent } from './pages/registropage/registropage.component';
 import { PasswordRecoverypageComponent } from './pages/password-recoverypage/password-recoverypage.component';
 import { CodeVerificationpageComponent } from './pages/code-verificationpage/code-verificationpage.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
         component:LayoutpageComponent,
         children:[
             {path:'registro',component:RegistropageComponent},
+            {path:'reportes',component:ReportespageComponent},
             {path:'recovery', component:PasswordRecoverypageComponent},
             {path:'verification', component:CodeVerificationpageComponent},
             {path:'thanku', component:ThankYoupageComponent},

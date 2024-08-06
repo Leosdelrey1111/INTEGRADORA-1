@@ -61,7 +61,7 @@ export class RegisterpageComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       fullName: ['', Validators.required],
       career: [''],
-      groupo: ['']
+      group: ['']
     });
   }
 
@@ -72,13 +72,13 @@ export class RegisterpageComponent implements OnInit {
   onUserTypeChange(): void {
     const userType = this.vehicleForm.value.userType;
 
-    if (userType === 'Estudiante') {
+    if (userType === 'student') {
       this.vehicleForm.addControl('controlNumber', this.fb.control('', Validators.required));
       this.vehicleForm.addControl('career', this.fb.control('', Validators.required));
-      this.vehicleForm.addControl('groupo', this.fb.control('', Validators.required));
+      this.vehicleForm.addControl('group', this.fb.control('', Validators.required));
       this.vehicleForm.removeControl('birthDate'); // Remove Professor-specific field
-    } else if (userType === 'Profesor') {
-      this.vehicleForm.addControl('controlNumber', this.fb.control('', Validators.required));
+    } else if (userType === 'teacher') {
+      this.vehicleForm.removeControl('controlNumber');
     }
   }
 

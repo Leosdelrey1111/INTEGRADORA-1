@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutpageComponent } from './pages/layoutpage/layoutpage.component';
 import { AddwpageComponent } from './pages/addwpage/addwpage.component';
 import { PermisosComponent } from './pages/permisos/permisos.component';
+import { NotipageComponent } from './pages/notipage/notipage.component';
 import { PerfilpageComponent } from './pages/perfilpage/perfilpage.component';
 import { PassrecopageComponent } from './pages/passrecopage/passrecopage.component';
 import { PassnewpageComponent } from './pages/passnewpage/passnewpage.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
     {path:'registro', component: AddwpageComponent},
     {path:'permisos', component: PermisosComponent},
+    {path:'noti', component: NotipageComponent},
     {path:'perfil', component:PerfilpageComponent},
     {path:'changeP', component: PassrecopageComponent},
     {path:'newP', component: PassnewpageComponent},

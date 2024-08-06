@@ -1,0 +1,25 @@
+<!-- report-notifications.component.html -->
+<div class="notifications-container">
+    <h2>Notificaciones de Reportes</h2>
+    <div *ngFor="let notification of notifications" class="notification-card">
+      <h3>{{ notification.title }}</h3>
+      <p>{{ notification.message }}</p>
+      <small>{{ notification.date | date:'short' }}</small>
+    </div>
+  </div>
+
+  <style>
+    /* report-notifications.component.css */
+.notifications-container {
+  padding: 20px;
+}
+
+.notification-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+  </style>
