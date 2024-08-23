@@ -6,7 +6,7 @@
       <p>{{ usuario.correo }}</p>
     </div>
   
-    <form class="form" [formGroup]="changePasswordForm">
+    <form class="form" [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
       <mat-form-field>
         <input matInput type="password" formControlName="currentPassword" placeholder="Contraseña actual">
       </mat-form-field>

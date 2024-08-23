@@ -1,79 +1,63 @@
-<body>
-  <div class="contenedor">
-  <h2 class="mat-h2">Registro de Entradas y Salidas</h2>
+<h2 class="mat-h2">Registro de Entradas y Salidas</h2>
 
-  <!-- Date Range Filter with Angular Material -->
-  <div class="mat-form-field">
-    <mat-form-field appearance="fill">
-      <mat-label>Filtrar por rango de fechas:</mat-label>
-      <input matInput type="date" id="startDate" />
-    </mat-form-field>
+<!-- Date Range Filter with Angular Material -->
+<div class="mat-form-field">
+  <mat-form-field appearance="fill">
+    <mat-label>Filtrar por rango de fechas:</mat-label>
+    <input matInput type="date" id="startDate">
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>A</mat-label>
-      <input matInput type="date" id="endDate" />
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>A</mat-label>
+    <input matInput type="date" id="endDate">
+  </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="filterEntries()">
-      Filtrar
-    </button>
-  </div>
+  <button mat-raised-button color="primary" (click)="filterEntries()">Filtrar</button>
+</div>
 
-  <!-- Parking Spaces Counter -->
-  <p class="mat-body-strong">
-    Espacios ocupados: {{ occupiedSpaces }} / {{ maxParkingSpaces }}
-  </p>
+<!-- Parking Spaces Counter -->
+<p class="mat-body-strong">Espacios ocupados: {{ occupiedSpaces }} / {{ maxParkingSpaces }}</p>
 
-  <!-- Input and Button for Adding New Vehicle -->
-  <div class="input-container">
-    <mat-form-field appearance="fill">
-      <mat-label>Código de Barras</mat-label>
-      <input
-        matInput
-        [(ngModel)]="barcode"
-        placeholder="Ingrese código de barras"
-      />
-    </mat-form-field>
-    <button mat-raised-button color="accent" (click)="addVehicleByBarcode()">
-      Nuevo Vehículo Entrando
-    </button>
-  </div>
+<!-- Input and Button for Adding New Vehicle -->
+<div class="input-container">
+  <mat-form-field appearance="fill">
+    <mat-label>Código de Barras</mat-label>
+    <input matInput [(ngModel)]="barcode" placeholder="Ingrese código de barras">
+  </mat-form-field>
+  <button mat-raised-button color="accent" (click)="addVehicleByBarcode()">Nuevo Vehículo Entrando</button>
+</div>
 
-  <!-- List of users with Angular Material table -->
-  <h3 class="mat-h3">Usuarios en el Estacionamiento</h3>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let user">{{ user.nombre }}</td>
-    </ng-container>
+<!-- List of users with Angular Material table -->
+<h3 class="mat-h3">Usuarios en el Estacionamiento</h3>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+  </ng-container>
 
-    <!-- User Type Column -->
-    <ng-container matColumnDef="userType">
-      <th mat-header-cell *matHeaderCellDef>Tipo de Usuario</th>
-      <td mat-cell *matCellDef="let user">{{ user.tipo }}</td>
-    </ng-container>
+  <!-- User Type Column -->
+  <ng-container matColumnDef="userType">
+    <th mat-header-cell *matHeaderCellDef>Tipo de Usuario</th>
+    <td mat-cell *matCellDef="let user">{{ user.userType }}</td>
+  </ng-container>
 
-    <!-- Entry Time Column -->
-    <ng-container matColumnDef="entryTime">
-      <th mat-header-cell *matHeaderCellDef>Hora de Entrada</th>
-      <td mat-cell *matCellDef="let user">
-        {{ user.hora }}
-      </td>
-    </ng-container>
+  <!-- Entry Time Column -->
+  <ng-container matColumnDef="entryTime">
+    <th mat-header-cell *matHeaderCellDef>Hora de Entrada</th>
+    <td mat-cell *matCellDef="let user">{{ user.entryTime | date:'short' }}</td>
+  </ng-container>
 
-    <!-- Action Column -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef>Acción</th>
-      <td mat-cell *matCellDef="let i = index">
-        <button mat-icon-button color="warn" (click)="userExited(i)">
-          <mat-icon>exit_to_app</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+  <!-- Action Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Acción</th>
+    <td mat-cell *matCellDef="let i = index">
+      <button mat-icon-button color="warn" (click)="userExited(i)">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  </div>
-</body>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

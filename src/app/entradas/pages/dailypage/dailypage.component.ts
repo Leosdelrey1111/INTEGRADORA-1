@@ -1,11 +1,6 @@
-import { EntradaSalidaService } from './../../services/entrada-salida.service';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { reporteService} from '../../services/reporte.service';  // Asegúrate de importar el servicio correctamente
 import { reporte } from '../../interfaces/reporte'; 
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatTableDataSource } from '@angular/material/table';
-import html2pdf from 'html2pdf.js';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dailypage',
@@ -14,18 +9,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   `
   .container {
   display: flex;
-  flex-direction:column;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
-.reporte-container{
-  display: flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-mat-card {
-  width: 600px;
+.mat-card {
+  width: 400px;
   max-width: calc(100% - 20px); /* Ajusta el ancho máximo */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -53,27 +44,13 @@ export class DailypageComponent {
     eventosImportantes: '',
     observaciones: ''
   };
-  displayedColumns: string[] = ['name', 'userType', 'entryTime', 'action'];
 
-  registros=[];
-  dataSource: any;
-
-  @ViewChild('pdfContent') pdfContent: ElementRef | undefined;
-  
-  constructor(
-    private reporteService: reporteService,
-    private entradaSalidaService:EntradaSalidaService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private reporteService: reporteService) {}
 
   generarReporte() {
     this.reporteService.generarReporte(this.reporte).subscribe(
       response => {
-        this.snackBar.open(
-          `Reporte generado exitosamente`,
-          'Cerrar',
-          { duration: 3000, panelClass: ['success-snackbar'] }
-        );
+        console.log('Reporte generado exitosamente:', response);
         // Manejar la respuesta del servidor, mostrar notificaciones, etc.
       },
       error => {
@@ -83,58 +60,21 @@ export class DailypageComponent {
     );
   }
 
-  calcularCampos(){
-    this.reporte.totalVehiculos=this.registros.length;
-    this.reporte.ingresosTotales=this.registros.length;
-    this.reporte.tiempoPromedio=this.calcularDuraciones(this.registros);
-  }
-
-  getEntradasySalidas(event: MatDatepickerInputEvent<Date>){
-    
-    const fechaSeleccionada = event.value;
-    if (fechaSeleccionada) {
-      const formattedDate = this.formatDate(fechaSeleccionada);
-      console.log('Fecha seleccionada:', formattedDate);
-
-      this.entradaSalidaService.getEntradasSalidas(formattedDate).subscribe(
-        (res:any)=>{
-          this.registros=res
-          this.updateOccupiedSpaces()
-          this.calcularCampos();
-        }
-      )
-    }
-    
-  }
-
-  updateOccupiedSpaces() {
-    this.dataSource = new MatTableDataSource<any>(this.registros); // Actualizar dataSource
-  }
-
-  formatDate(date: Date): string {
-    // Formatea la fecha como YYYY-MM-DD
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  }
-
   exportarPDF() {
-    const options = {
-      margin: 0.5,
-      filename: 'reporte.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-
-    // Captura el contenido del PDF
-    html2pdf().from(this.pdfContent!.nativeElement).set(options).save();
-
-    this.snackBar.open(
-      `Descargando PDF`,
-      'Cerrar',
-      { duration: 3000, panelClass: ['success-snackbar'] }
+    // Aquí deberías manejar el ID del reporte que quieres exportar
+    this.reporteService.exportarPDF(1).subscribe(
+      response => {
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error => {
+        console.error('Error al exportar el reporte en PDF:', error);
+      }
     );
   }
 
@@ -148,24 +88,5 @@ export class DailypageComponent {
       eventosImportantes: '',
       observaciones: ''
     };
-  }
-
-  calcularDuraciones(registros: any[]):number {
-    console.log('...........')
-    const duraciones=registros.map(registro => {
-      if (registro.HoraSalida && registro.hora) {
-        const entrada = new Date(`1970-01-01T${registro.hora}Z`);
-        const salida = new Date(`1970-01-01T${registro.HoraSalida}Z`);
-        const duracion = (salida.getTime() - entrada.getTime()) / (1000 * 60); // Duración en minutos
-        console.log(duracion)
-        return duracion;
-      }
-      return 0;
-    });
-    const totalDuracion = duraciones.reduce((acc, duracion) => acc + duracion, 0);
-    const promedio = duraciones.length > 0 ? totalDuracion / duraciones.length : 0;
-
-    // Redondear el promedio a dos decimales
-    return parseFloat(promedio.toFixed(0));
   }
 }
