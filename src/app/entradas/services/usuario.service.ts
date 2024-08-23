@@ -38,8 +38,4 @@ export class UserService {
   searchUserByBarcode(barcode: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/barcode/${barcode}`,);
   }
-
-  changePassword(email: string, oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.put<any>(this.apiUrl+'/change-password', { email, oldPassword, newPassword });
-  }
 }

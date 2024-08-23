@@ -24,7 +24,7 @@ export class ProfileComponent implements AfterViewInit {
   }
 
   navigateToRecovery() {
-    this.router.navigate(['admin/newP']);
+    this.router.navigate(['admin/changeP']);
   }
 
   getProfile() {

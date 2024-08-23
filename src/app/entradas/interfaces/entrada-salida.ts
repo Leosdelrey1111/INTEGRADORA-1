@@ -1,7 +1,8 @@
 export interface EntradaSalida {
     idEntradaSalida?: number; // Optional for update operations
     idUsuario: number;
-    HoraEntrada: number;
+    idVehiculo: number;
+    entrada: Date;
     salida?: Date;
   }
   
